@@ -5,4 +5,11 @@ defmodule Tree do
   def tree_size({:leaf, _}), do: 1
   def tree_size({:branch, left, right}), do: 1 + tree_size(left) + tree_size(right)
 
+  defp max_acc({:leaf, v}, acc), do: max(v, acc)
+  defp max_acc({:branch, left, right}, acc) do
+    max(max_acc(left, acc), max_acc(right, acc))
+  end
+
+  # What's the smallest int value?
+  def maximum(l), do: max_acc(l, -999999999)
 end
