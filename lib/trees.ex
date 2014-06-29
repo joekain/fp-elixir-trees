@@ -15,4 +15,7 @@ defmodule Tree do
 
   def depth({:leaf, _}), do: 1
   def depth({:branch, left, right}), do: 1 + max(depth(left), depth(right))
+
+  def map({:leaf, v}, f), do: leaf(f.(v))
+  def map({:branch, left, right}, f), do: branch( map(left,f ), map(right, f))
 end

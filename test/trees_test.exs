@@ -37,4 +37,9 @@ defmodule TreesTest do
   test "depth should compute the maxium depth of the tree" do
     assert Tree.depth(build_tree) == 5
   end
+
+  # Not sure how best to test this, use max to confirm a value
+  test "map should apply a function to all leaf nodes" do
+    assert Tree.maximum(Tree.map(build_tree, fn(v) -> v * v end)) == 36
+  end
 end
