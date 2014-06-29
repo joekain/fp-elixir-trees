@@ -12,4 +12,7 @@ defmodule Tree do
 
   # What's the smallest int value?
   def maximum(l), do: max_acc(l, -999999999)
+
+  def depth({:leaf, _}), do: 1
+  def depth({:branch, left, right}), do: 1 + max(depth(left), depth(right))
 end

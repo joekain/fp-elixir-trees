@@ -33,4 +33,8 @@ defmodule TreesTest do
   test "max should return the value of the maximum leaf" do
     assert Tree.maximum(build_tree) == 6
   end
+
+  test "depth should compute the maxium depth of the tree" do
+    assert Tree.depth(build_tree) == 5
+  end
 end
