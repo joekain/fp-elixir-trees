@@ -26,31 +26,31 @@ defmodule Tree do
   # Exercise 29
   # This is not tail recursive, can it be since I have to call
   # fold twice?
-  def fold({:leaf, v}, acc, _branch_func, leaf_func) do
-    leaf_func.(v, acc)
+  def fold({:leaf, v}, _branch_func, leaf_func) do
+    leaf_func.(v)
   end
-  def fold({:branch, left, right}, acc, branch_func, leaf_func) do
-    branch_func.(fold(left, acc, branch_func, leaf_func),
-                 fold(right, acc, branch_func, leaf_func))
+  def fold({:branch, left, right}, branch_func, leaf_func) do
+    branch_func.(fold(left, branch_func, leaf_func),
+                 fold(right, branch_func, leaf_func))
   end
 
-  def size_with_fold(t), do: fold(t, 0,
+  def size_with_fold(t), do: fold(t,
     fn(left_acc, right_acc) -> 1 + left_acc + right_acc end,
-    fn(_v, _acc) -> 1 end
+    fn(_v) -> 1 end
   )
 
-  def max_with_fold(t), do: fold(t, 0,
+  def max_with_fold(t), do: fold(t,
     fn(left_acc, right_acc) -> max(left_acc, right_acc) end,
-    fn(v, _acc) -> v end
+    fn(v) -> v end
   )
 
-  def depth_with_fold(t), do: fold(t, 0,
+  def depth_with_fold(t), do: fold(t,
     fn(left_acc, right_acc) -> 1 + max(left_acc, right_acc) end,
-    fn(_v, _acc) -> 1 end
+    fn(_v) -> 1 end
   )
 
-  def map_with_fold(t, f), do: fold(t, :nothing,
+  def map_with_fold(t, f), do: fold(t,
     fn(left_acc, right_acc) -> branch(left_acc, right_acc) end,
-    fn(v, acc) -> leaf(f.(v)) end
+    fn(v) -> leaf(f.(v)) end
   )
 end
