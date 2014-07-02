@@ -1,7 +1,4 @@
 defmodule Tree do
-  # What's the smallest int value?
-  @small_int -999999999
-
   def leaf(v), do: { :leaf, v }
   def branch(left, right), do: { :branch, left, right }
 
@@ -12,17 +9,14 @@ defmodule Tree do
 
 
   #Exercise 26
-  defp max_acc({:leaf, v}, acc), do: max(v, acc)
-  defp max_acc({:branch, left, right}, acc) do
-    max(max_acc(left, acc), max_acc(right, acc))
-  end
-
-  def maximum(l), do: max_acc(l, @small_int)
+  def maximum({:leaf, v}), do: v
+  def maximum({:branch, left, right}), do: max(maximum(left), maximum(right))
 
 
   # Exercise 27
   def depth({:leaf, _}), do: 1
   def depth({:branch, left, right}), do: 1 + max(depth(left), depth(right))
+
 
   # Exercise 28
   def map({:leaf, v}, f), do: leaf(f.(v))
@@ -45,9 +39,9 @@ defmodule Tree do
     fn(_v, _acc) -> 1 end
   )
 
-  def max_with_fold(t), do: fold(t, @small_int,
+  def max_with_fold(t), do: fold(t, 0,
     fn(left_acc, right_acc) -> max(left_acc, right_acc) end,
-    fn(v, acc) -> max(v, acc) end
+    fn(v, _acc) -> v end
   )
 
   def depth_with_fold(t), do: fold(t, 0,
@@ -56,7 +50,7 @@ defmodule Tree do
   )
 
   def map_with_fold(t, f), do: fold(t, :nothing,
-    fn(left_acc, right_acc) -> branch( left_acc, right_acc) end,
+    fn(left_acc, right_acc) -> branch(left_acc, right_acc) end,
     fn(v, acc) -> leaf(f.(v)) end
   )
 end
